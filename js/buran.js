@@ -30,8 +30,22 @@ define('buran', ['konva', 'jquery'], function (konva, jquery) {
 
     $(document).on('keydown', function(e) {
         if(e.keyCode == '37') {
-            im.rotate(-5);
+            setInterval(function() {
+                im.rotate(-1);
+                layer.draw();
+            }, 20);
+        }
+        if(e.keyCode == '39') {
+            im.rotate(5);
             layer.draw();
+        }
+    });
+    $(document).on('keyup', function(e) {
+        if(e.keyCode == '37') {
+            setInterval(function() {
+                im.rotate(-1);
+                layer.draw();
+            }, 20);
         }
         if(e.keyCode == '39') {
             im.rotate(5);
