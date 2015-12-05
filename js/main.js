@@ -1,9 +1,18 @@
 requirejs.config({
     baseUrl: "js",
     paths: {
+        /* Vendor */
         jquery: '../bower_components/jquery/dist/jquery.min',
         underscore: '../bower_components/underscore-min',
-        konva: '../bower_components/konva/konva.min'
+        konva: '../bower_components/konva/konva.min',
+
+        /* Classes */
+        space: 'classes/space',
+        buran: 'classes/buran',
+
+        /* Controllers */
+        spaceCtrl: 'controllers/space.controller',
+        buranCtrl: 'controllers/buran.controller'
     },
     shim: {
         'jquery': {
@@ -18,7 +27,7 @@ requirejs.config({
     }
 });
 
-require(['konva', 'app', 'space', 'buran'], function(konva, app, space, buran) {
+require(['konva', 'app', 'space', 'buran', 'buranCtrl'], function(konva, app, space, buran, buranCtrl) {
 
 
 

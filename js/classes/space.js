@@ -1,9 +1,9 @@
 
-define('space', ['jquery'], function(jquery) {
+define('space', ['konva', 'jquery'], function(konva, jquery) {
 
-    var drawingCanvas = document.getElementById('space');
-
-    if(drawingCanvas && drawingCanvas.getContext) {
+    //var drawingCanvas = document.getElementById('space');
+    //
+    //if(drawingCanvas && drawingCanvas.getContext) {
         //var ctx = drawingCanvas.getContext('2d');
         //
         //var img = new Image();
@@ -11,6 +11,6 @@ define('space', ['jquery'], function(jquery) {
         //img.onload = function() {
         //    ctx.drawImage(img, 10, 10, 20, 20);
         //};
-    }
+    //}
 
 });
