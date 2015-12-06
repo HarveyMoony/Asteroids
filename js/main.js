@@ -5,6 +5,7 @@ requirejs.config({
         jquery: '../bower_components/jquery/dist/jquery.min',
         underscore: '../bower_components/underscore-min',
         konva: '../bower_components/konva/konva.min',
+        utils: 'utils',
 
         /* Classes */
         space: 'classes/space',

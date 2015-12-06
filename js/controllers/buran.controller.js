@@ -2,8 +2,6 @@ define('buranCtrl', ['buran'], function(buran) {
 
     buran.init();
 
-    var fire = false;
-
     $(document).on('keydown', function(e) {
         if(e.keyCode == '37') {
             buran.turnLeft.start();
@@ -15,9 +13,9 @@ define('buranCtrl', ['buran'], function(buran) {
             buran.flyForward.start()
         }
         if(e.keyCode == '32') {
-            if(!fire) {
+            if(!buran.fireState) {
                 buran.fire();
-                fire = true;
+                buran.fireState = true;
             }
         }
     });
@@ -33,7 +31,7 @@ define('buranCtrl', ['buran'], function(buran) {
             buran.flyForward.stop()
         }
         if(e.keyCode == '32') {
-            fire = false;
+            buran.fireState = false;
         }
     });
 

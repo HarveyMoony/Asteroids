@@ -1,16 +1,21 @@
 
-define('space', ['konva', 'jquery'], function(konva, jquery) {
+define('space', ['konva', 'jquery', 'app'], function(konva, jquery, app) {
 
-    //var drawingCanvas = document.getElementById('space');
-    //
-    //if(drawingCanvas && drawingCanvas.getContext) {
-        //var ctx = drawingCanvas.getContext('2d');
-        //
-        //var img = new Image();
-        //img.src = 'img/fighter-512.png';
-        //img.onload = function() {
-        //    ctx.drawImage(img, 10, 10, 20, 20);
-        //};
-    //}
+    var bkg = new Image();
+    bkg.onload = function() {
+        var backgroundImage = new Konva.Image({
+            x: 0,
+            y: 0,
+            width: 1920,
+            height: 1080,
+            image: bkg
+        });
+        console.log('space');
+        app.layer.add(backgroundImage);
+        backgroundImage.setZIndex(0);
+        app.layer.draw();
+    };
+
+    bkg.src = 'img/space_bkg.jpg';
 
 });

@@ -1,13 +1,13 @@
-define('buran', ['konva', 'app'], function (konva, app) {
+define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
 
-    var angle = 0,
-        fireInterval;
+    var angle = 0;
 
     var api = {
         speed: 4,
         turnSpeed: 2,
         whizbangSpeed: 1,
-        gunActive: 1,
+        fireRate: 100,
+        fireState: false,
 
         init: init,
         img: {},
@@ -31,6 +31,7 @@ define('buran', ['konva', 'app'], function (konva, app) {
             app.layer.draw();
         });
 
+        console.log('buran');
         app.layer.draw();
     }
 
@@ -52,21 +53,24 @@ define('buran', ['konva', 'app'], function (konva, app) {
 
     /** Газ */
     api.flyForward = new Konva.Animation(function(frame) {
-        var sin = Math.sin(angle * Math.PI / 180);
-        var cos = Math.cos(angle * Math.PI / 180);
+        var sin = u.math.sin(angle);
+        var cos = u.math.cos(angle);
 
         api.img.setX(api.img.x() + api.speed * cos);
         api.img.setY(api.img.y() + api.speed * sin);
     }, app.layer);
 
-    /** Выстрел */
+    /** Огонь */
     api.fire = function (){
-        fireInterval = setInterval(function() {
 
-            var x = api.img.x(),
-                y = api.img.y(),
-                sin = Math.sin(angle * Math.PI / 180),
-                cos = Math.cos(angle * Math.PI / 180);
+        var gunActive = 1;
+
+        setTimeout(function run() {
+
+            var sin = u.math.sin(angle),
+                cos = u.math.cos(angle),
+                gunPosX = api.img.x() + u.math.cos(angle + 90 * gunActive) * 11,
+                gunPosY = api.img.y() + u.math.sin(angle + 90 * gunActive) * 11;
 
             var whizbang = new Konva.Circle({
                 x: api.img.x(),
@@ -78,17 +82,25 @@ define('buran', ['konva', 'app'], function (konva, app) {
             app.layer.draw();
 
             var fire = new Konva.Animation(function(frame) {
-                whizbang.setX(x + api.whizbangSpeed * frame.time * cos);
-                whizbang.setY(y + api.whizbangSpeed * frame.time * sin);
+                whizbang.setX(gunPosX + api.whizbangSpeed * frame.time * cos);
+                whizbang.setY(gunPosY + api.whizbangSpeed * frame.time * sin);
             }, app.layer);
+
+            /* Поочередная смена пушек */
+            if(gunActive == 1) {gunActive = -1}
+            else {gunActive = 1}
 
             fire.start();
 
             setTimeout(function() {
                 whizbang.destroy();
-            }, 3000)
+            }, 3000);
 
-        }, 100);
+            setTimeout(function(){
+                if(api.fireState) run();
+            }, api.fireRate);
+
+        }, 0);
     };
 
 
