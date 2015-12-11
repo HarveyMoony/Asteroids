@@ -16,22 +16,21 @@ define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
     };
 
     function init() {
-        Konva.Image.fromURL('img/buran-32.png', function(image){
+        Konva.Image.fromURL('img/buran-48.png', function(image){
             api.img = image;
-            image.width(32);
-            image.height(32);
+            image.width(48);
+            image.height(44);
             image.x(100);
             image.y(100);
             image.offset({
-                x: 16,
-                y: 16
+                x: 20,
+                y: 22
             });
             image.rotate(angle);
             app.layer.add(image);
             app.layer.draw();
         });
 
-        console.log('buran');
         app.layer.draw();
     }
 
@@ -69,14 +68,14 @@ define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
 
             var sin = u.math.sin(angle),
                 cos = u.math.cos(angle),
-                gunPosX = api.img.x() + u.math.cos(angle + 90 * gunActive) * 11,
-                gunPosY = api.img.y() + u.math.sin(angle + 90 * gunActive) * 11;
+                gunPosX = api.img.x() + u.math.cos(angle + 70 * gunActive) * 16,
+                gunPosY = api.img.y() + u.math.sin(angle + 70 * gunActive) * 16;
 
             var whizbang = new Konva.Circle({
                 x: api.img.x(),
                 y: api.img.y(),
                 radius: 2,
-                fill: '#bb0000'
+                fill: '#ffffff'
             });
             app.layer.add(whizbang);
             app.layer.draw();
