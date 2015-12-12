@@ -1,62 +1,94 @@
 define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
 
-    var angle = 0;
+    'use strict';
+
+    var angle = 0,
+        flyForwardInterval,
+        flyStopInterval;
+
 
     var api = {
-        speed: 4,
+        maxSpeed: 4, // *60 px/s
+        currentSpeed: 0,
+        acceleration: 2, // *60 px/s
         turnSpeed: 2,
         whizbangSpeed: 1,
         fireRate: 100,
         fireState: false,
 
         init: init,
-        img: {},
+        buranImg: {},
         turnLeft: {},
         turnRight: {}
     };
 
     function init() {
-        Konva.Image.fromURL('img/buran-48.png', function(image){
-            api.img = image;
-            image.width(48);
-            image.height(44);
-            image.x(100);
-            image.y(100);
-            image.offset({
-                x: 20,
-                y: 22
-            });
-            image.rotate(angle);
-            app.layer.add(image);
-            app.layer.draw();
-        });
+        return new Promise(function(resolve, reject) {
 
-        app.layer.draw();
+            var buranImgObj = new Image();
+            buranImgObj.onload = function() {
+                api.buranImg = new Konva.Image({
+                    image: buranImgObj,
+                    width: 48,
+                    height: 44,
+                    x: 100,
+                    y: 100,
+                    offset: {
+                        x: 20,
+                        y: 22
+                    },
+                    rotate: angle
+                });
+                app.layer.add(api.buranImg);
+                app.layer.draw();
+
+                resolve()
+            };
+            buranImgObj.src = 'img/buran-48.png';
+
+        });
     }
 
     /** Поворот влево */
     api.turnLeft = new Konva.Animation(function(frame) {
         angle -= api.turnSpeed;
-        if(angle < 0) angle = 359;
 
-        api.img.rotate(-api.turnSpeed);
+        api.buranImg.rotate(-api.turnSpeed);
     }, app.layer);
 
     /** Поворот вправо */
     api.turnRight = new Konva.Animation(function(frame) {
         angle += api.turnSpeed;
-        if(angle > 359) angle = 0;
 
-        api.img.rotate(api.turnSpeed);
+        api.buranImg.rotate(api.turnSpeed);
     }, app.layer);
 
     /** Газ */
-    api.flyForward = new Konva.Animation(function(frame) {
+    api.flyForward = function() {
+        clearInterval(flyStopInterval);
+        flyForwardInterval = setInterval(function() {
+            api.currentSpeed += 0.5;
+            if(api.currentSpeed >= api.maxSpeed) {
+                clearInterval(flyForwardInterval)
+            }
+        }, 18);
+    };
+    api.flyStop = function() {
+        clearInterval(flyForwardInterval);
+        flyStopInterval = setInterval(function() {
+            api.currentSpeed -= 0.1;
+            if(api.currentSpeed <= 0) {
+                clearInterval(flyStopInterval)
+            }
+        }, 18);
+    };
+
+    api.flyForwardAnimationInit = new Konva.Animation(function(frame) {
         var sin = u.math.sin(angle);
         var cos = u.math.cos(angle);
 
-        api.img.setX(api.img.x() + api.speed * cos);
-        api.img.setY(api.img.y() + api.speed * sin);
+        api.buranImg.setX(api.buranImg.x() + api.currentSpeed * cos);
+        api.buranImg.setY(api.buranImg.y() + api.currentSpeed * sin);
     }, app.layer);
 
     /** Огонь */
@@ -68,12 +100,12 @@ define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
 
             var sin = u.math.sin(angle),
                 cos = u.math.cos(angle),
-                gunPosX = api.img.x() + u.math.cos(angle + 70 * gunActive) * 16,
-                gunPosY = api.img.y() + u.math.sin(angle + 70 * gunActive) * 16;
+                gunPosX = api.buranImg.x() + u.math.cos(angle + 70 * gunActive) * 16,
+                gunPosY = api.buranImg.y() + u.math.sin(angle + 70 * gunActive) * 16;
 
             var whizbang = new Konva.Circle({
-                x: api.img.x(),
-                y: api.img.y(),
+                x: api.buranImg.x(),
+                y: api.buranImg.y(),
                 radius: 2,
                 fill: '#ffffff'
             });
