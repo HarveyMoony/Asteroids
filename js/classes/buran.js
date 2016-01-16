@@ -2,19 +2,21 @@ define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
 
     'use strict';
 
-    var angle = 0,
+    var angle = 0,              // угол поворота корабля
+        flyAngle = 0,           // угол направления движения корабля
         flyForwardInterval,
         flyStopInterval;
 
 
     var api = {
-        maxSpeed: 4, // *60 px/s
+        maxSpeed: 5, // *60 px/s
         currentSpeed: 0,
         acceleration: 2, // *60 px/s
         turnSpeed: 2,
         whizbangSpeed: 1,
         fireRate: 100,
         fireState: false,
+        moveState: false,
 
         init: init,
         buranImg: {},
@@ -52,6 +54,7 @@ define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
     /** Поворот влево */
     api.turnLeft = new Konva.Animation(function(frame) {
         angle -= api.turnSpeed;
+        if (api.moveState) flyAngle = angle;
 
         api.buranImg.rotate(-api.turnSpeed);
     }, app.layer);
@@ -59,6 +62,7 @@ define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
     /** Поворот вправо */
     api.turnRight = new Konva.Animation(function(frame) {
         angle += api.turnSpeed;
+        if (api.moveState) flyAngle = angle;
 
         api.buranImg.rotate(api.turnSpeed);
     }, app.layer);
@@ -66,6 +70,7 @@ define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
     /** Газ */
     api.flyForward = function() {
         clearInterval(flyStopInterval);
+        api.moveState = true;
         flyForwardInterval = setInterval(function() {
             api.currentSpeed += 0.5;
             if(api.currentSpeed >= api.maxSpeed) {
@@ -75,6 +80,7 @@ define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
     };
     api.flyStop = function() {
         clearInterval(flyForwardInterval);
+        api.moveState = false;
         flyStopInterval = setInterval(function() {
             api.currentSpeed -= 0.1;
             if(api.currentSpeed <= 0) {
@@ -84,8 +90,8 @@ define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
     };
 
     api.flyForwardAnimationInit = new Konva.Animation(function(frame) {
-        var sin = u.math.sin(angle);
-        var cos = u.math.cos(angle);
+        var sin = u.math.sin(flyAngle);
+        var cos = u.math.cos(flyAngle);
 
         api.buranImg.setX(api.buranImg.x() + api.currentSpeed * cos);
         api.buranImg.setY(api.buranImg.y() + api.currentSpeed * sin);
