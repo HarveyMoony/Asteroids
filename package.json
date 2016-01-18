@@ -1,0 +1,22 @@
+{
+  "name": "asteroids",
+  "version": "1.0.0",
+  "description": {
+    "requirejs": "^2.1.22",
+    "jquery": "^2.0",
+    "underscore": "^1.8.3",
+    "konva": "^0.11.1",
+    "matter-js": "^0.9.0"
+  },
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarveyMoony/Asteroids.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HarveyMoony/Asteroids/issues"
+  },
+  "homepage": "https://github.com/HarveyMoony/Asteroids#readme"
+}
