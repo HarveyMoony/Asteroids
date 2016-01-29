@@ -1,5 +1,8 @@
+module.exports = function() {
 
-define('space', ['konva', 'jquery', 'matter', 'app'], function(konva, jquery, matter, app) {
+    var konva = require('konva'),
+        Matter = require('matter'),
+        canvas = require('canvas');
 
     var bkg = new Image();
     bkg.onload = function() {
@@ -10,9 +13,9 @@ define('space', ['konva', 'jquery', 'matter', 'app'], function(konva, jquery, ma
             height: 720,
             image: bkg
         });
-        app.layer.add(backgroundImage);
+        canvas.layer.add(backgroundImage);
         backgroundImage.setZIndex(0);
-        app.layer.draw();
+        canvas.layer.draw();
     };
 
     bkg.src = 'img/bkg_1200.jpg';
@@ -36,4 +39,4 @@ define('space', ['konva', 'jquery', 'matter', 'app'], function(konva, jquery, ma
 // run the engine
     Engine.run(engine);
 
-});
+};

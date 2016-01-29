@@ -1,6 +1,4 @@
 
-define('utils', [], function() {
-
     var utils = {
         math: {}
     };
@@ -13,6 +11,4 @@ define('utils', [], function() {
         return Math.cos(angle * Math.PI / 180)
     };
 
-    return utils;
-
-});
+    module.exports =  utils;

@@ -1,6 +1,9 @@
-define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
+module.exports = function() {
 
-    'use strict';
+    var konva = require('konva'),
+        u = require('utils'),
+        canvas = require('canvas');
+
 
     var angle = 0,              // угол поворота корабля
         flyAngle = 0,           // угол направления движения корабля
@@ -41,8 +44,8 @@ define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
                     },
                     rotate: angle
                 });
-                app.layer.add(api.buranImg);
-                app.layer.draw();
+                canvas.layer.add(api.buranImg);
+                canvas.layer.draw();
 
                 resolve()
             };
@@ -57,7 +60,7 @@ define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
         if (api.moveState) flyAngle = angle;
 
         api.buranImg.rotate(-api.turnSpeed);
-    }, app.layer);
+    }, canvas.layer);
 
     /** Поворот вправо */
     api.turnRight = new Konva.Animation(function(frame) {
@@ -65,7 +68,7 @@ define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
         if (api.moveState) flyAngle = angle;
 
         api.buranImg.rotate(api.turnSpeed);
-    }, app.layer);
+    }, canvas.layer);
 
     /** Газ */
     api.flyForward = function() {
@@ -95,7 +98,7 @@ define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
 
         api.buranImg.setX(api.buranImg.x() + api.currentSpeed * cos);
         api.buranImg.setY(api.buranImg.y() + api.currentSpeed * sin);
-    }, app.layer);
+    }, canvas.layer);
 
     /** Огонь */
     api.fire = function (){
@@ -115,13 +118,13 @@ define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
                 radius: 2,
                 fill: '#ffffff'
             });
-            app.layer.add(whizbang);
-            app.layer.draw();
+            canvas.layer.add(whizbang);
+            canvas.layer.draw();
 
             var fire = new Konva.Animation(function(frame) {
                 whizbang.setX(gunPosX + api.whizbangSpeed * frame.time * cos);
                 whizbang.setY(gunPosY + api.whizbangSpeed * frame.time * sin);
-            }, app.layer);
+            }, canvas.layer);
 
             /* Поочередная смена пушек */
             if(gunActive == 1) {gunActive = -1}
@@ -143,4 +146,4 @@ define('buran', ['konva', 'utils', 'app'], function (konva, u, app) {
 
     return api;
 
-});
+};

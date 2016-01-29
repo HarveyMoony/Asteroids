@@ -1,14 +1,8 @@
 {
   "name": "asteroids",
   "version": "1.0.0",
-  "description": {
-    "requirejs": "^2.1.22",
-    "jquery": "^2.0",
-    "underscore": "^1.8.3",
-    "konva": "^0.11.1",
-    "matter-js": "^0.9.0"
-  },
-  "main": "server.js",
+  "description": "Classic game",
+  "main": "./src/js/main.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HarveyMoony/Asteroids.git"
@@ -18,5 +12,52 @@
   "bugs": {
     "url": "https://github.com/HarveyMoony/Asteroids/issues"
   },
-  "homepage": "https://github.com/HarveyMoony/Asteroids#readme"
+  "homepage": "https://github.com/HarveyMoony/Asteroids#readme",
+  "browser": {
+    "jquery": "./bower_components/jquery/dist/jquery.min",
+    "underscore": "./bower_components/underscore/underscore-min",
+    "matter": "./bower_components/matterjs/build/matter.min",
+
+    "utils": "./src/js/utils.js",
+
+    "canvas": "./src/js/canvas.js",
+
+    "space": "./src/js/classes/space.js",
+    "buran": "./src/js/classes/buran.js",
+    "spaceCtrl": "./src/js/controllers/space.controller.js",
+    "buranCtrl": "./src/js/controllers/buran.controller.js"
+  },
+  "browserify-shim": {
+    "jquery": {
+      "exports": "$"
+    },
+    "underscore": {
+      "exports": "underscore"
+    },
+    "konva": {
+      "exports": "konva"
+    },
+    "matter": {
+      "exports": "matter"
+    }
+  },
+  "browserify": {
+    "transform": [ "browserify-shim" ]
+  },
+  "dependencies": {
+    "browserify": "^13.0.0",
+    "browserify-shim": "^3.8.12",
+    "jsdom": "^3.*",
+    "konva": "0.11.1",
+    "gulp": "*",
+    "gulp-concat": "*",
+    "gulp-uglify": "*",
+    "gulp-imagemin": "*",
+    "gulp-minify-css": "*",
+    "vinyl-source-stream": "*",
+    "vinyl-buffer": "*"
+  },
+  "scripts": {
+    "build-js": "browserify src/js/main.js -o build/js/app.js"
+  }
 }

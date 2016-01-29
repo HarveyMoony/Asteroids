@@ -1,4 +1,8 @@
-define('buranCtrl', ['buran'], function(buran) {
+module.exports = function() {
+
+    var $ = require('jquery'),
+        buran = require('buran')();
+
 
     buran.init().then(function() {
         buran.flyForwardAnimationInit.start();
@@ -43,4 +47,4 @@ define('buranCtrl', ['buran'], function(buran) {
         }
     });
 
-});
+};
