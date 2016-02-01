@@ -1,6 +1,9 @@
+
+'use strict';
+
 var browserify = require('browserify'),
+    watchify = require('watchify'),
     gulp = require('gulp'),
-    concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     imagemin = require('gulp-imagemin'),
     minifyCss = require('gulp-minify-css'),
@@ -15,16 +18,20 @@ var browserify = require('browserify'),
         scripts: './src/js/*',
         css: './src/css/*.css',
         images: './src/img/*'
-    };
+    },
+
+    b = browserify({
+        entries: paths.srcFile,
+        plugin: [watchify]
+    });
 
 
 /* Объединение и минификация JS */
 gulp.task('browserify', function() {
-    return browserify(paths.srcFile)
-        .bundle()
+    return b.bundle()
         .pipe(source(paths.destFile))
-        .pipe(buffer())
-        .pipe(uglify())
+        //.pipe(buffer())
+        //.pipe(uglify())
         .pipe(gulp.dest(paths.destFolder + 'js'));
 });
 
@@ -44,10 +51,19 @@ gulp.task('minify-images', function() {
 
 /* Вотчер изменения JS */
 gulp.task('watch', function() {
-    gulp.watch(paths.scripts, ['browserify'])
-        .on('change', function() {
-            console.log('Scripts changes');
+    b.on('update', rebundle);
+
+    function rebundle() {
+        b.on('log', function(msg) {
+            console.log(msg);
         });
+
+        return b.bundle()
+            .pipe(source(paths.destFile))
+            .pipe(gulp.dest(paths.destFolder + 'js'));
+    }
+
+    return rebundle();
 });
 
 

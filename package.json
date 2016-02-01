@@ -47,10 +47,10 @@
   "dependencies": {
     "browserify": "^13.0.0",
     "browserify-shim": "^3.8.12",
+    "watchify": "^3.7.0",
     "jsdom": "^3.*",
     "konva": "0.11.1",
     "gulp": "*",
-    "gulp-concat": "*",
     "gulp-uglify": "*",
     "gulp-imagemin": "*",
     "gulp-minify-css": "*",
