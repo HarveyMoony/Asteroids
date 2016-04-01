@@ -1,0 +1,40 @@
+
+/*
+  Intro page
+*/
+
+.wrapper-intro {width: 380px; position: absolute; left: 50%; margin-left: -190px; margin-top: -70px; top: 50%; transition: all .5s ease-in-out;
+    &.go {top: 25%;}
+}
+
+.header-intro {
+  .logo {display: inline-block;
+    .logo__img {vertical-align: middle;}
+    .logo__text {font-size: 3em; color: #ffffff; margin-left: 25px; vertical-align: middle;}
+  }
+}
+
+.start-options {margin: 15px 0 0 60px; opacity: 1; height: auto; transition: all .5s ease-in-out;
+  .option {
+    .option__v-line {width: 5px; height: 80px; background: #fff; border-radius: 4px;}
+
+    .option__header {margin: -2px 0 0 -20px;
+      .option__circle {width: 36px; height: 36px; border-radius: 25px; border: 5px solid #fff; position: relative; display: inline-block; vertical-align: middle;
+        .option__circle-done {width: 26px; height: 26px; border-radius: 15px; background: #87f199; margin: auto; top: 0; bottom: 0; right: 0; left: 0; position: absolute;}
+      }
+      .option__title {margin-left: 18px; font-size: 1.5em; vertical-align: middle; color: #fff;}
+    }
+
+    .option__content {border-left: 5px solid #fff; min-height: 80px; padding: 15px 0 15px 55px; margin: -1px 0 -1px 0; width: 300px}
+
+    .ships-list {
+      label {background: url('../images/ships-spite.png'); width: 50px; height: 65px; display: inline-block; cursor: pointer; margin-right: 25px;
+        &.ship-1:hover, &.ship-1.active {background-position: 0 -65px}
+        &.ship-2 {background-position: 100px 0}
+        &.ship-2:hover, &.ship-2.active {background-position: 100px -65px}
+        &.ship-3 {background-position: 50px 0}
+        &.ship-3:hover, &.ship-3.active {background-position: 50px -65px}
+      }
+    }
+  }
+}

@@ -1,11 +1,12 @@
 {
   "name": "asteroids",
-  "version": "0.0.0",
-  "homepage": "https://github.com/HarveyMoony/Asteroids",
-  "authors": [
-    "Stas Luchnikov <s.luchnikov@ilp-agency.ru>"
-  ],
-  "license": "MIT",
+  "description": "",
+  "main": "main.js",
+  "authors": "Harvey",
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
@@ -15,6 +16,7 @@
   ],
   "dependencies": {
     "jquery": "~2.1.4",
+    "vue": "^1.*",
     "underscore": "~1.8.3",
     "konva": "~0.11.1",
     "matterjs": "~0.9.0",

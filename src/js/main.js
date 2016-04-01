@@ -1,6 +1,4 @@
 
-var canvas = require('canvas'),
+'use strict';
 
-    space = require('space')(),
-
-    buranCtrl = require('buranCtrl')();
+import introPage from '../modules/intro-page/controller';

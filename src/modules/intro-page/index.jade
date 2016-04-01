@@ -1,0 +1,39 @@
+
+//- Intro page
+
+div.wrapper-intro
+
+    header.header-intro
+        div.logo
+            img.logo__img(src="images/logo_125.png" alt="Asteroids")
+            span.logo__text ASTEROIDS
+
+    section.start-options.hidden
+        div.option
+            div.option__v-line
+
+            div.option__header
+                div.option__circle
+                    div.option__circle-done
+                span.option__title Идентификация
+            div.option__content
+                div.form-element
+                    label Укажите имя:
+                    input(type="text")
+                div.form-element
+                    button Подтвердить
+
+        div.option.hidden
+            div.option__header
+                div.option__circle
+                    div.option__circle-done
+                span.option__title Выбор корабля
+            div.option__content
+                div.hidden
+                    input(type="radio" name="ships" id="ship-1")
+                    input(type="radio" name="ships" id="ship-2")
+                    input(type="radio" name="ships" id="ship-3")
+                div.ships-list
+                    label.ship-1(for="ship-1")
+                    label.ship-2(for="ship-2")
+                    label.ship-3(for="ship-3")
