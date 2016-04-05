@@ -16,6 +16,7 @@
       "gulp-less": "^3.0.5",
         "less-plugin-clean-css": "^1.5.1",
         "less-plugin-autoprefix": "^1.5.1",
+      "gulp-imagemin": "2.4.0",
       "gulp-uglify": "^1.5.3",
       "gulp-concat": "^2.6.0",
       "gulp-plumber": "~1.1.0",

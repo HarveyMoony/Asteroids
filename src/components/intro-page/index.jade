@@ -3,18 +3,21 @@
 
 div.wrapper-intro
 
-    header.header-intro
+    header.header-intro.hidden
         div.logo
             img.logo__img(src="images/logo_125.png" alt="Asteroids")
             span.logo__text ASTEROIDS
 
+            div.form-element.form-element--start.hidden
+                button.btn--xl Поехали
+
     section.start-options.hidden
-        div.option
+        div.option.option__username
             div.option__v-line
 
             div.option__header
                 div.option__circle
-                    div.option__circle-done
+                    div.option__circle-done.hidden
                 span.option__title Идентификация
             div.option__content
                 div.form-element
@@ -23,10 +26,10 @@ div.wrapper-intro
                 div.form-element
                     button Подтвердить
 
-        div.option.hidden
+        div.option.option__ship.hidden
             div.option__header
                 div.option__circle
-                    div.option__circle-done
+                    div.option__circle-done.hidden
                 span.option__title Выбор корабля
             div.option__content
                 div.hidden
@@ -37,3 +40,5 @@ div.wrapper-intro
                     label.ship-1(for="ship-1")
                     label.ship-2(for="ship-2")
                     label.ship-3(for="ship-3")
+                div.form-element
+                    button Подтвердить

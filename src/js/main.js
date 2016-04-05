@@ -1,4 +1,6 @@
 
 'use strict';
 
-import introPage from '../modules/intro-page/controller';
+
+import introPage from './../components/intro-page/controller';
+//import animations from './../components/intro-page/animations';

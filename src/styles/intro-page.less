@@ -4,13 +4,18 @@
 */
 
 .wrapper-intro {width: 380px; position: absolute; left: 50%; margin-left: -190px; margin-top: -70px; top: 50%; transition: all .5s ease-in-out;
-    &.go {top: 25%;}
+    &.go-40 {top: 40%;}
+    &.go-25 {top: 25%;}
+    &.go-20 {top: 20%;}
 }
 
 .header-intro {
   .logo {display: inline-block;
     .logo__img {vertical-align: middle;}
     .logo__text {font-size: 3em; color: #ffffff; margin-left: 25px; vertical-align: middle;}
+  }
+  .form-element--start {float: right; margin-right: 60px; transition: all .4s ease-in-out .3s;
+    &.go {margin-top: -10px;}
   }
 }
 
@@ -20,14 +25,14 @@
 
     .option__header {margin: -2px 0 0 -20px;
       .option__circle {width: 36px; height: 36px; border-radius: 25px; border: 5px solid #fff; position: relative; display: inline-block; vertical-align: middle;
-        .option__circle-done {width: 26px; height: 26px; border-radius: 15px; background: #87f199; margin: auto; top: 0; bottom: 0; right: 0; left: 0; position: absolute;}
+        .option__circle-done {width: 26px; height: 26px; border-radius: 15px; background: #87f199; margin: auto; top: 0; bottom: 0; right: 0; left: 0; position: absolute; transition: all .15s ease-in-out;}
       }
       .option__title {margin-left: 18px; font-size: 1.5em; vertical-align: middle; color: #fff;}
     }
 
-    .option__content {border-left: 5px solid #fff; min-height: 80px; padding: 15px 0 15px 55px; margin: -1px 0 -1px 0; width: 300px}
+    .option__content {min-height: 80px; padding: 15px 0 15px 55px; margin: -1px 0 -1px 0; width: 300px}
 
-    .ships-list {
+    .ships-list {margin-bottom: 20px;
       label {background: url('../images/ships-spite.png'); width: 50px; height: 65px; display: inline-block; cursor: pointer; margin-right: 25px;
         &.ship-1:hover, &.ship-1.active {background-position: 0 -65px}
         &.ship-2 {background-position: 100px 0}
@@ -36,5 +41,9 @@
         &.ship-3:hover, &.ship-3.active {background-position: 50px -65px}
       }
     }
+
+    &.option__ship {transition: all .5s ease-in-out;}
+
+    &.option--done .option__content {border-left: 5px solid #fff; }
   }
 }

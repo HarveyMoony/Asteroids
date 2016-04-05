@@ -14,6 +14,7 @@ const gulp = require("gulp"),
             LessPluginAutoPrefix = require('less-plugin-autoprefix'),
             cleancss = new LessPluginCleanCSS({ advanced: true }),
             autoprefix= new LessPluginAutoPrefix({ browsers: ["last 2 versions"] }),
+        imagemin = require('gulp-imagemin'),
         uglify = require('gulp-uglify'),
         concat = require('gulp-concat'),
         plumber = require('gulp-plumber'),
@@ -59,6 +60,16 @@ gulp.task('styles', () => {
 });
 
 
+/* Images
+*/
+
+gulp.task('images', function() {
+    return gulp.src('src/images/*')
+        .pipe(imagemin({optimizationLevel: 5}))
+        .pipe(gulp.dest('dist/images'))
+});
+
+
 /* Scripts
  */
 
@@ -77,6 +88,10 @@ gulp.task('scripts', () => {
 function bundle(bundler) {
     return bundler
         .bundle()
+        .on('error', function (err) {
+            console.log(err.toString());
+            this.emit("end");
+        })
         .pipe(source('main.js'))
         .pipe(buffer())
         .pipe(plumber())
@@ -110,4 +125,4 @@ gulp.task('watch', () => {
 });
 
 
-gulp.task('default', ['templates', 'styles', 'scripts', 'watch', 'serve']);
+gulp.task('default', ['templates', 'styles', 'images', 'scripts', 'watch', 'serve']);
