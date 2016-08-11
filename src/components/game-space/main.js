@@ -1,6 +1,5 @@
 
-import say from 'canvas';
+import say from './canvas';
 
-    //space = require('space')(),
-    //
-    //buranCtrl = require('buranCtrl')();
+    const space = require('space')();
+    const buranCtrl = require('buranCtrl')();

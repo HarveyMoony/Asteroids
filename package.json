@@ -4,10 +4,15 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "Harvey",
   "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3",
+    "socket.io": "^1.4.8"
+  },
   "devDependencies": {
     "gulp": "~3.9.1",
       "gulp-sourcemaps": "^1.6.0",
