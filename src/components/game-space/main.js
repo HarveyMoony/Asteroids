@@ -2,4 +2,7 @@
 import stage from './stage';
 
 import space        from './classes/space';
-import buranCtrl    from './controllers/buran.controller';
+
+import Buran from './classes/Buran';
+
+let buran = new Buran();
