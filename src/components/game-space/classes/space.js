@@ -1,8 +1,10 @@
-module.exports = function() {
 
-    var konva = require('konva'),
-        Matter = require('matter'),
-        canvas = require('canvas');
+import Konva from 'konva';
+import stage from '../stage';
+
+function space() {
+
+    // var Matter = require('matter')
 
     var bkg = new Image();
     bkg.onload = function() {
@@ -13,12 +15,12 @@ module.exports = function() {
             height: 720,
             image: bkg
         });
-        canvas.layer.add(backgroundImage);
+        stage.layer.add(backgroundImage);
         backgroundImage.setZIndex(0);
-        canvas.layer.draw();
+        stage.layer.draw();
     };
 
-    bkg.src = 'img/bkg_1200.jpg';
+    bkg.src = '../images/bkg_2400.jpg';
 
     // Matter.js module aliases
 //    var Engine = Matter.Engine,
@@ -39,4 +41,6 @@ module.exports = function() {
 //// run the engine
 //    Engine.run(engine);
 
-};
+}
+
+export default space();

@@ -1,15 +1,14 @@
-module.exports = function() {
 
-    var konva = require('konva'),
-        u = require('utils'),
-        canvas = require('canvas');
+import Konva from 'konva';
+import stage from '../stage';
+import u from '../utils';
 
+function buran() {
 
     var angle = 0,              // угол поворота корабля
         flyAngle = 0,           // угол направления движения корабля
         flyForwardInterval,
         flyStopInterval;
-
 
     var api = {
         maxSpeed: 5, // *60 px/s
@@ -44,12 +43,12 @@ module.exports = function() {
                     },
                     rotate: angle
                 });
-                canvas.layer.add(api.buranImg);
-                canvas.layer.draw();
+                stage.layer.add(api.buranImg);
+                stage.layer.draw();
 
                 resolve()
             };
-            buranImgObj.src = 'img/buran-48.png';
+            buranImgObj.src = '../images/ships_96.png';
 
         });
     }
@@ -57,23 +56,20 @@ module.exports = function() {
     /** Поворот влево */
     api.turnLeft = new Konva.Animation(function(frame) {
         angle -= api.turnSpeed;
-        if (api.moveState) flyAngle = angle;
 
         api.buranImg.rotate(-api.turnSpeed);
-    }, canvas.layer);
+    }, stage.layer);
 
     /** Поворот вправо */
     api.turnRight = new Konva.Animation(function(frame) {
         angle += api.turnSpeed;
-        if (api.moveState) flyAngle = angle;
 
         api.buranImg.rotate(api.turnSpeed);
-    }, canvas.layer);
+    }, stage.layer);
 
     /** Газ */
     api.flyForward = function() {
         clearInterval(flyStopInterval);
-        api.moveState = true;
         flyForwardInterval = setInterval(function() {
             api.currentSpeed += 0.5;
             if(api.currentSpeed >= api.maxSpeed) {
@@ -83,7 +79,6 @@ module.exports = function() {
     };
     api.flyStop = function() {
         clearInterval(flyForwardInterval);
-        api.moveState = false;
         flyStopInterval = setInterval(function() {
             api.currentSpeed -= 0.1;
             if(api.currentSpeed <= 0) {
@@ -93,12 +88,12 @@ module.exports = function() {
     };
 
     api.flyForwardAnimationInit = new Konva.Animation(function(frame) {
-        var sin = u.math.sin(flyAngle);
-        var cos = u.math.cos(flyAngle);
+        var sin = u.math.sin(angle);
+        var cos = u.math.cos(angle);
 
         api.buranImg.setX(api.buranImg.x() + api.currentSpeed * cos);
         api.buranImg.setY(api.buranImg.y() + api.currentSpeed * sin);
-    }, canvas.layer);
+    }, stage.layer);
 
     /** Огонь */
     api.fire = function (){
@@ -118,13 +113,13 @@ module.exports = function() {
                 radius: 2,
                 fill: '#ffffff'
             });
-            canvas.layer.add(whizbang);
-            canvas.layer.draw();
+            stage.layer.add(whizbang);
+            stage.layer.draw();
 
             var fire = new Konva.Animation(function(frame) {
                 whizbang.setX(gunPosX + api.whizbangSpeed * frame.time * cos);
                 whizbang.setY(gunPosY + api.whizbangSpeed * frame.time * sin);
-            }, canvas.layer);
+            }, stage.layer);
 
             /* Поочередная смена пушек */
             if(gunActive == 1) {gunActive = -1}
@@ -146,4 +141,6 @@ module.exports = function() {
 
     return api;
 
-};
+}
+
+export default buran();

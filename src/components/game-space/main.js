@@ -1,5 +1,5 @@
 
-import say from './canvas';
+import stage from './stage';
 
-    const space = require('space')();
-    const buranCtrl = require('buranCtrl')();
+import space        from './classes/space';
+import buranCtrl    from './controllers/buran.controller';

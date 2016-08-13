@@ -1,12 +1,18 @@
-module.exports = function() {
 
-    var $ = require('jquery'),
-        buran = require('buran')();
 
+import buran from '../classes/buran';
+
+function buranCtrl() {
 
     buran.init().then(function() {
         buran.flyForwardAnimationInit.start();
     });
+    setTimeout(() => {
+        buran.init().then(function() {
+            buran.flyForwardAnimationInit.start();
+        });
+    }, 3000)
+
 
     var flyForwardState = false;
 
@@ -47,4 +53,6 @@ module.exports = function() {
         }
     });
 
-};
+}
+
+export default buranCtrl();

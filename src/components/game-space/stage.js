@@ -1,18 +1,15 @@
 
-export default function say() {
-    console.log('canvas.js');
+import Konva from 'konva';
 
-    var konva = require('konva');
+function stage() {
 
-
-    var stage = new konva.Stage({
+    var stage = new Konva.Stage({
         container: 'space',
         width: 1200,
         height: 720
     });
 
-
-    var layer = new konva.Layer();
+    var layer = new Konva.Layer();
     stage.add(layer);
 
 
@@ -25,5 +22,4 @@ export default function say() {
         $angle = $('.angle');
 }
 
-
-
+export default stage();
