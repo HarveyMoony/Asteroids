@@ -17,9 +17,6 @@ function stage() {
         stage: stage,
         layer: layer
     };
-
-    var $speed= $('.speed'),
-        $angle = $('.angle');
 }
 
 export default stage();

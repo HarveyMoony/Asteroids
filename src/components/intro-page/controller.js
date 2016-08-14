@@ -1,11 +1,6 @@
 
 'use strict';
 
-const jQuery = require('jquery');
-
-//import animations from './animations';
-
-
 (function($) {
     $(document).ready(function() {
 

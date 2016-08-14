@@ -63,42 +63,6 @@ class Buran {
             }, stage.layer).start();
         });
 
-        let flyForwardState = false;
-
-        
-      // Controller
-
-        document.addEventListener('keydown', (e) => {
-            switch (e.keyCode) {
-                case 37:
-                    this.wheelLeft(); break;
-                case 39:
-                    this.wheelRight(); break;
-                case 38:
-                    if(!flyForwardState){
-                        this.flyForward();
-                        flyForwardState = true;
-                    } break;
-                case 32:
-                    if(!this.fireState) {
-                        this.fire();
-                        this.fireState = true;
-                    } break;
-            }
-        });
-
-        document.addEventListener('keyup', (e) => {
-            switch (e.keyCode) {
-                case 37:
-                case 39:
-                    this.wheelCenter(); break;
-                case 38:
-                    this.flyStop();
-                    flyForwardState = false; break;
-                case 32:
-                    this.fireState = false; break;
-            }
-        });
     }
 
     /** Руль прямо */
