@@ -34,7 +34,8 @@
     "babel-preset-react": "^6.5.0",
     "vinyl-source-stream": "^1.1.0",
     "vinyl-buffer": "^1.0.0",
-    "konva": "^1.0.2"
+    "konva": "^1.0.2",
+    "underscore": "^1.8.3"
   },
   "browser": {
     "jquery": "./src/vendor/jquery/jquery.min.js"

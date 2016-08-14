@@ -7,7 +7,7 @@ const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
-let allClients = [];
+let activeSessions = [];
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/dist'));
@@ -17,23 +17,41 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function(socket){
-    console.log('Connected');
 
-    allClients.push(socket);
+    let sessionId = socket.id.slice(-6);
 
-    socket.on('disconnect', function() {
-        console.log('Got disconnect!');
+    activeSessions.push(sessionId);
 
-        let i = allClients.indexOf(socket);
-        allClients.splice(i, 1);
+  // Emit
+    io.emit('clientСonnect', {
+        activeSessions: activeSessions,
+        id: sessionId
     });
 
+  // Listen
+    socket.on('disconnect', function(data) {
+        activeSessions.splice(activeSessions.indexOf(sessionId), 1);
 
-    io.emit('gameInit', {id: socket.id});
+        io.emit('clientDisconnect', {
+            activeSessions: activeSessions,
+            id: sessionId
+        })
+    });
 
-    // socket.on('keyup', function(msg){
-    //     io.emit('keyup', msg);
-    // });
+    socket.on('wheelCenter', function(data) {
+        io.emit('wheelCenter', {sessionId: data.sessionId})
+    });
+    
+    socket.on('wheelLeft', function(data) {
+        io.emit('wheelLeft', {sessionId: data.sessionId})
+    });
+
+    socket.on('wheelRight', function(data) {
+        io.emit('wheelRight', {sessionId: data.sessionId})
+    });
+    
+    
+
 });
 
 http.listen(app.get('port'), function() {

@@ -5,7 +5,7 @@ import u from '../utils';
 
 class Buran {
 
-    constructor() {
+    constructor(name = 'Shadow') {
 
         this._angle = 0;                // угол поворота корабля
 
@@ -41,6 +41,17 @@ class Buran {
             };
             buranImgObj.src = '../images/ships_96.png';
 
+            this._nameText = new Konva.Text({
+                x: 130,
+                y: 80,
+                text: name,
+                fontSize: 14,
+                fontFamily: 'Calibri',
+                fill: 'white'
+            });
+
+            stage.layer.add(this._nameText)
+
         }).then(() => {
             new Konva.Animation((frame) => {
 
@@ -50,6 +61,8 @@ class Buran {
 
                 this.buranImg.setX(this.buranImg.x() + this.currentSpeed * cos);
                 this.buranImg.setY(this.buranImg.y() + this.currentSpeed * sin);
+                this._nameText.setX(this.buranImg.x() + this.currentSpeed * cos);
+                this._nameText.setY(this.buranImg.y() + 30 + this.currentSpeed * sin);
 
               // Повороты
                 if (this._turningLeft) {
@@ -146,7 +159,12 @@ class Buran {
             }, self.fireRate);
 
         }, 0);
-    };
+    }
+
+    destroy() {
+        this.buranImg.destroy();
+        this._nameText.destroy();
+    }
 
 }
 
