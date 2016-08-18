@@ -38,22 +38,17 @@ io.on('connection', function(socket){
         })
     });
 
-    socket.on('wheelCenter', function(data) {
-        io.emit('wheelCenter', {sessionId: data.sessionId})
+    socket.on('updateClientPosition', (data) => {
+        io.emit('updateClientPosition', {
+            sessionId: data.sessionId,
+            posX: data.posX,
+            posY: data.posY,
+            angle: data.angle,
+        })
     });
-    
-    socket.on('wheelLeft', function(data) {
-        io.emit('wheelLeft', {sessionId: data.sessionId})
-    });
-
-    socket.on('wheelRight', function(data) {
-        io.emit('wheelRight', {sessionId: data.sessionId})
-    });
-    
-    
 
 });
 
 http.listen(app.get('port'), function() {
-    console.log("Node app is running at localhost:" + app.get('port'))
+    console.log("Asteroids is running at localhost:" + app.get('port'))
 });

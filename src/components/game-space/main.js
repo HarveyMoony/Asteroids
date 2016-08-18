@@ -32,44 +32,56 @@ socket.on('clientDisconnect', function(data){
     })
 });
 
-socket.on('wheelCenter', function(data){
+socket.on('updateClientPosition', function(data){
     if (data.sessionId == YOUR_SESSION_ID) return;
-    ships[data.sessionId].wheelCenter()
+    ships[data.sessionId].setPosition(data.posX, data.posY, data.angle)
 });
 
-socket.on('wheelLeft', function(data){
-    if (data.sessionId == YOUR_SESSION_ID) return;
-    ships[data.sessionId].wheelLeft()
-});
-
-socket.on('wheelRight', function(data){
-    if (data.sessionId == YOUR_SESSION_ID) return;
-    ships[data.sessionId].wheelRight()
-});
-
+setInterval(() => {
+    socket.emit('updateClientPosition', {
+        sessionId: YOUR_SESSION_ID,
+        posX: ships[YOUR_SESSION_ID].posX,
+        posY: ships[YOUR_SESSION_ID].posY,
+        angle: ships[YOUR_SESSION_ID].angle,
+    });
+}, 500);
 
 
 // Ship controller
 
-let flyForwardState = false;
+let keyStates = {
+    left: false,
+    right: false,
+    up: false,
+    down: false,
+    space: false,
+};
 
 document.addEventListener('keydown', (e) => {
+    e.preventDefault();
+
     switch (e.keyCode) {
         case 37:
+            if (keyStates.left) return;
             ships[YOUR_SESSION_ID].wheelLeft();
-            socket.emit('wheelLeft', {sessionId: YOUR_SESSION_ID}); break;
+            keyStates.left = true;
+            break;
         case 39:
-            ships[YOUR_SESSION_ID].wheelRight(); break;
+            if (keyStates.right) return;
+            ships[YOUR_SESSION_ID].wheelRight();
+            keyStates.right = true;
+            break;
         case 38:
-            if(!flyForwardState){
-                ships[YOUR_SESSION_ID].flyForward();
-                flyForwardState = true;
-            } break;
+            if (ships[YOUR_SESSION_ID].currentSpeed != 0) return;
+            ships[YOUR_SESSION_ID].flyForward();
+            keyStates.up = true;
+            break;
         case 32:
-            if(!ships[YOUR_SESSION_ID].fireState) {
-                ships[YOUR_SESSION_ID].fire();
-                ships[YOUR_SESSION_ID].fireState = true;
-            } break;
+            if (ships[YOUR_SESSION_ID].fireState) return;
+            ships[YOUR_SESSION_ID].fire();
+            ships[YOUR_SESSION_ID].fireState = true;
+            break;
+        case 40:
     }
 });
 
@@ -78,10 +90,13 @@ document.addEventListener('keyup', (e) => {
         case 37:
         case 39:
             ships[YOUR_SESSION_ID].wheelCenter();
-            socket.emit('wheelCenter', {sessionId: YOUR_SESSION_ID}); break;
+            socket.emit('wheelCenter', {sessionId: YOUR_SESSION_ID});
+            keyStates.left = false;
+            keyStates.right = false;
+            break;
         case 38:
             ships[YOUR_SESSION_ID].flyStop();
-            flyForwardState = false; break;
+            keyStates.up = false; break;
         case 32:
             ships[YOUR_SESSION_ID].fireState = false; break;
     }

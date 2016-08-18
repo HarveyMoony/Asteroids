@@ -7,8 +7,6 @@ class Buran {
 
     constructor(name = 'Shadow') {
 
-        this._angle = 0;                // угол поворота корабля
-
         this.maxSpeed = 5;              // *60 px/s
         this.currentSpeed = 0;
         this.acceleration = 2;          // *60 px/s
@@ -16,7 +14,10 @@ class Buran {
         this.whizbangSpeed = 1;
         this.fireRate = 100;
         this.fireState = false;
-        this.moveState = false;
+
+        this.posX = 100;
+        this.posY = 100;
+        this.angle = 90;                 // угол поворота корабля
 
         new Promise((resolve, reject) => {
 
@@ -26,13 +27,13 @@ class Buran {
                     image: buranImgObj,
                     width: 48,
                     height: 44,
-                    x: 100,
-                    y: 100,
+                    x: this.posX,
+                    y: this.posY,
                     offset: {
                         x: 20,
                         y: 22
                     },
-                    rotate: this._angle
+                    rotation: this.angle
                 });
                 stage.layer.add(this.buranImg);
                 stage.layer.draw();
@@ -56,20 +57,27 @@ class Buran {
             new Konva.Animation((frame) => {
 
               // Движение по курсу
-                let sin = u.math.sin(this._angle);
-                let cos = u.math.cos(this._angle);
+                let sin = u.math.sin(this.angle);
+                let cos = u.math.cos(this.angle);
 
-                this.buranImg.setX(this.buranImg.x() + this.currentSpeed * cos);
-                this.buranImg.setY(this.buranImg.y() + this.currentSpeed * sin);
-                this._nameText.setX(this.buranImg.x() + this.currentSpeed * cos);
-                this._nameText.setY(this.buranImg.y() + 30 + this.currentSpeed * sin);
+                this.posX = this.buranImg.x();
+                this.posY = this.buranImg.y();
+
+                this.buranImg.setX(this.posX + this.currentSpeed * cos);
+                this.buranImg.setY(this.posY + this.currentSpeed * sin);
+
+              // Текст
+                this._nameText.setX(this.buranImg.x());
+                this._nameText.setY(this.buranImg.y() + 30);
+
+                this._nameText.setText(this.angle);
 
               // Повороты
                 if (this._turningLeft) {
-                    this._angle -= this.turnSpeed;
+                    this.angle -= this.turnSpeed;
                     this.buranImg.rotate(-this.turnSpeed);
                 } else if (this._turningRight) {
-                    this._angle += this.turnSpeed;
+                    this.angle += this.turnSpeed;
                     this.buranImg.rotate(+this.turnSpeed);
                 }
 
@@ -77,6 +85,9 @@ class Buran {
         });
 
     }
+
+
+  // API
 
     /** Руль прямо */
     wheelCenter() {
@@ -125,10 +136,10 @@ class Buran {
 
         setTimeout(function run() {
 
-            let sin = u.math.sin(self._angle),
-                cos = u.math.cos(self._angle),
-                gunPosX = self.buranImg.x() + u.math.cos(self._angle + 70 * gunActive) * 16,
-                gunPosY = self.buranImg.y() + u.math.sin(self._angle + 70 * gunActive) * 16;
+            let sin = u.math.sin(self.angle),
+                cos = u.math.cos(self.angle),
+                gunPosX = self.buranImg.x() + u.math.cos(self.angle + 70 * gunActive) * 16,
+                gunPosY = self.buranImg.y() + u.math.sin(self.angle + 70 * gunActive) * 16;
 
             let whizbang = new Konva.Circle({
                 x: self.buranImg.x(),
@@ -161,9 +172,19 @@ class Buran {
         }, 0);
     }
 
+
+  // Helpers
+
     destroy() {
         this.buranImg.destroy();
         this._nameText.destroy();
+    }
+
+    setPosition(x, y, angle) {
+        this.buranImg.setX(x);
+        this.buranImg.setY(y);
+        this.buranImg.rotate(angle - this.angle);
+        this.angle = angle;
     }
 
 }
