@@ -72,7 +72,7 @@ document.addEventListener('keydown', (e) => {
             keyStates.right = true;
             break;
         case 38:
-            if (ships[YOUR_SESSION_ID].currentSpeed != 0) return;
+            if (keyStates.up) return;
             ships[YOUR_SESSION_ID].flyForward();
             keyStates.up = true;
             break;
